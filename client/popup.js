@@ -9,7 +9,7 @@ var podnoms = {
     chrome: {
         chrome2kindle: {
             state: {},
-            serviceUrl: 'http://fermi.wasptech.com:8080/convert',
+            serviceUrl: 'http://chrome2kindle.appspot.coM',
             currentUrl: '', 
             kindleAccount: localStorage["kindle_account"],
             init: function (url) {
