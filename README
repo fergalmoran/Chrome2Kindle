@@ -1,0 +1,3 @@
+Chrome 2 Kindle Chrome2Kindle is a chrome extension that converts the web page you are viewing into a kindle compatible file and sends it direct to your device for later viewing.
+
+The project consists of two parts. The client is a Chrome extension that provides the browser plugin for sending a page to your reader. The server is a Google App Engine application that acts as a proxy, converting the web page to a pdf using pisa and sending it to your device via the whispernet (you@kindle.com) service.

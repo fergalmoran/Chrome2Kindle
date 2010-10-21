@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <title>Chrome 2 Kindle Options</title>
+    </head>
+    <script type="text/javascript">
+
+    // Saves options to localStorage.
+    function save_options() {
+        var kindleAccount = document.getElementById("kindle_account").value;
+        localStorage["kindle_account"] = kindleAccount;
+
+        // Update status to let user know options were saved.
+        var status = document.getElementById("status");
+        status.innerHTML = "Options Saved.";
+        setTimeout(function() {
+            status.innerHTML = "";
+        }, 
+        750);
+    }
+
+    // Restores select box state to saved value from localStorage.
+    function restore_options() {
+        var kindleAccount = localStorage["kindle_account"];
+        if (!kindleAccount) {
+            return;
+        }
+        var ctlKindle = document.getElementById("kindle_account");
+        ctlKindle.value = kindleAccount;
+    }
+
+    </script>
+
+    <body onload="restore_options()">
+        Kindle Account (you@kindle.com):
+        <input type="text" id="kindle_account" />
+        <br />
+        <button onclick="save_options()">Save</button>
+        <br />
+        <div id="status"> </div>
+    </body>
+</html>

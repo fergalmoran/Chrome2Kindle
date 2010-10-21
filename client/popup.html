@@ -1,0 +1,16 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="popup.js"></script>  
+<script>
+    window.addEventListener("load", windowLoaded, false);
+    function windowLoaded() {
+        chrome.tabs.getSelected(null, function(tab) {
+            generateEBook(tab.url);
+        });
+    }
+</script>
+<div id="main">  
+  <h1></h1>  
+  <div id="content">  
+    I'm an extension LOL..
+  </div>  
+</div>  

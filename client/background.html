@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
+        <script src="popup.js" type="text/javascript"></script> 
+        <script>
+            var req = new XMLHttpRequest();
+            req.open(
+                "GET",
+                "http://fermi.wasptech.com:8080/",
+                true
+            );
+            req.onload = processRequest;
+            /* req.send(null);*/
+            /* chrome.extension.getURL('http://fermi.wasptech.com:8080'); */
+            /* sendRequest(); */
+            processRequest();
+            function processRequest() {
+                chrome.extension.getURL('http://fermi.wasptech.com:8080');
+            }
+                
+            function processResponse(response) { 
+                var json = JSON.parse(response);
+            }
+
+            chrome.browserAction.onClicked.addListener(function(tab) {
+                alert('Sending request');
+            });
+        </script>
+    </head>
+</html>

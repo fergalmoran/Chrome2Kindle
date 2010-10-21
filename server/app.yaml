@@ -1,0 +1,15 @@
+application: chrome2kindle
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+-   url: /favicon.ico
+    static_files: site/favicon.ico
+    upload: site/favicon.ico
+
+-   url: /test.*
+    script: gaeunit.py
+
+-   url: /.*
+    script: index.py
