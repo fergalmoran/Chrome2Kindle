@@ -1,6 +1,6 @@
 {
     "name"              :   "Chrome 2 Kindle",
-    "version"           :   "0.1",
+    "version"           :   "0.2",
     "description"       :   "Sends rendered web pages to your kindle device",
     "options_page"      :   "options.html",
     "browser_action"    :   {
@@ -8,7 +8,6 @@
             "popup"         :   "popup.html"
     },
     "permissions"   : [
-              "http://fermi.wasptech.com/",
               "http://chrome2kindle.appspot.com/",
               "tabs"
 
