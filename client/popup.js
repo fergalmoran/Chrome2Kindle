@@ -23,12 +23,23 @@ var podnoms = {
                 json += '"pageUrl"    :   "' + this.currentUrl + '", ',
                 json += '"kindleAccount"    :   "' + this.kindleAccount + '"';
                 json += '}'; 
-                $.post(this.serviceUrl, json, function (xml, status, xhr) {
-                    podnoms.chrome.chrome2kindle.update(xml);
-                });
+                $.ajax(
+                    url: this.serviceUrl, 
+                    data: json, 
+                    success: function (xml, status, xhr) {
+                        podnoms.chrome.chrome2kindle.update(xml);
+                    },
+                    error: function (xml, status, xhr){
+                        podnoms.chrome.chrome2kindle.error(status);
+                    }
+                );
             },
             update: function (itemData) {
                 $('#main>h1').text('Hello Sailor...');
+                $('#content').html(itemData);
+            }
+            error: function (itemData) {
+                $('#main>h1').text('Error creating ebook...');
                 $('#content').html(itemData);
             }
         }
