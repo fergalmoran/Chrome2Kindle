@@ -1,41 +1,100 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Chrome 2 Kindle Options</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="options.js"></script>
+        <style type="text/css">
+            body {
+              font-family: arial, sans-serif;
+              font-size: smaller;
+            }
+
+            td {
+              padding: 5px;
+            }
+
+            .secondary td {
+              padding: 0px 5px;
+            }
+
+            .header {
+              font-size: 13px;
+              font-weight: bold;
+              border-bottom: solid 1px #ccc;
+              padding-bottom: 1px;
+            }
+
+            .label {
+              text-align: right;
+            }
+
+            .buttons {
+              text-align: right;
+              padding-top: 1em;
+            }
+            #validEmail {
+                margin-top: 4px;
+                margin-left: 9px;
+                position: absolute;
+                width: 16px;
+                height: 16px;
+            }
+        </style>
     </head>
-    <script type="text/javascript">
-
-    // Saves options to localStorage.
-    function save_options() {
-        var kindleAccount = document.getElementById("kindle_account").value;
-        localStorage["kindle_account"] = kindleAccount;
-
-        // Update status to let user know options were saved.
-        var status = document.getElementById("status");
-        status.innerHTML = "Options Saved.";
-        setTimeout(function() {
-            status.innerHTML = "";
-        }, 
-        750);
-    }
-
-    // Restores select box state to saved value from localStorage.
-    function restore_options() {
-        var kindleAccount = localStorage["kindle_account"];
-        if (!kindleAccount) {
-            return;
-        }
-        var ctlKindle = document.getElementById("kindle_account");
-        ctlKindle.value = kindleAccount;
-    }
-
-    </script>
-
     <body onload="restore_options()">
-        Kindle Account (you@kindle.com):
-        <input type="text" id="kindle_account" />
-        <br />
-        <button onclick="save_options()">Save</button>
-        <br />
-        <div id="status"> </div>
+        <table>
+            <thead>
+                <tr> <td class="header" colspan="3">Chrome 2 Kindle Options</td> </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> Kindle Account (you@kindle.com):</td>
+                    <td><input type="text" id="kindle_account" /></td>
+                    <td><span id="validEmail"></span></td>
+                </tr>
+                <tr>
+                    <td class="label">Server Type:</td>
+                    <td>
+                        <select id="server_type">
+                            <option value="live">Live</option>
+                            <option value="test">Test</option>
+                        </select> (please note, humans cannot use the test server)
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="label"> Output Size:</td>
+                    <td>
+                        <select id="output_size">
+                            <option value="a0">a0</option>
+                            <option value="a1">a1</option>
+                            <option value="a2">a2</option>
+                            <option value="a3">a3</option>
+                            <option value="a4">a4</option>
+                            <option value="a5">a5</option>
+                            <option value="a6">a6</option>
+                            <option value="b0">b0</option>
+                            <option value="b1">b1</option>
+                            <option value="b2">b2</option>
+                            <option value="b3">b3</option>
+                            <option value="b4">b4</option>
+                            <option value="b5">b5</option>
+                            <option value="b6">b6</option>
+                            <option value="letter">letter</option>
+                            <option value="legal">Llegal</option>
+                        </select> 
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td> <button onclick="save_options()">Save</button></td>
+                    <td></td>
+                    <td><div id="status"> </div></td>
+                </tr>
+            </tfoot>
+        </table>
     </body>
 </html>

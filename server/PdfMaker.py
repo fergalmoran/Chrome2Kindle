@@ -3,8 +3,217 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 import ho.pisa as pisa
 import urllib
+import logging
 
+DEFAULT_CSS = """
+html {
+    font-family: Helvetica; 
+    font-size: 10px; 
+    font-weight: normal;
+    color: #000000; 
+    background-color: transparent;
+    margin: 0; 
+    padding: 0;
+    line-height: 150%;
+    border: 1px none;
+    display: inline;
+    width: auto;
+    height: auto;
+    white-space: normal;    
+}
+
+b, 
+strong { 
+    font-weight: bold; 
+}
+
+i, 
+em { 
+    font-style: italic; 
+}
+
+u {
+    text-decoration: underline;
+}
+
+s,
+strike {
+    text-decoration: line-through;
+}
+
+a {
+    text-decoration: underline;
+    color: blue;
+}
+
+ins {
+    color: green;
+    text-decoration: underline;
+}
+del {
+    color: red;
+    text-decoration: line-through;
+}
+
+pre,
+code,
+kbd,
+samp,
+tt {
+    font-family: "Courier New";
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight:bold;
+    -pdf-outline: true;    
+    -pdf-outline-open: false;
+}
+
+h1 {
+    /*18px via YUI Fonts CSS foundation*/
+    font-size:138.5%; 
+    -pdf-outline-level: 0;
+}
+
+h2 {
+    /*16px via YUI Fonts CSS foundation*/
+    font-size:123.1%;
+    -pdf-outline-level: 1;
+}
+
+h3 {
+    /*14px via YUI Fonts CSS foundation*/
+    font-size:108%;
+    -pdf-outline-level: 2;
+}
+
+h4 {
+    -pdf-outline-level: 3;
+}
+
+h5 {
+    -pdf-outline-level: 4;
+}
+
+h6 {
+    -pdf-outline-level: 5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre,
+hr {
+    margin:1em 0;
+}
+
+address,
+blockquote,
+body,
+center,
+dl,
+dir,
+div,
+fieldset,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+isindex,
+menu,
+noframes,
+noscript,
+ol,
+p,
+pre,
+table,
+th,
+tr,
+td,
+ul,
+li,
+dd,
+dt,
+pdftoc {
+    display: block;
+}
+
+table {
+     -pdf-keep-in-frame-mode: shrink;
+}
+
+tr,
+th,
+td {
+
+    vertical-align: middle;
+    width: auto;
+}
+
+th {
+    text-align: center;
+    font-weight: bold;
+}
+
+center {
+    text-align: center;
+}
+
+big {
+    font-size: 125%;
+}
+
+small {
+    font-size: 75%;
+}
+
+
+ul {
+    margin-left: 1.5em;
+    list-style-type: disc;
+}
+
+ul ul {
+    list-style-type: circle;
+}
+
+ul ul ul {
+    list-style-type: square;
+}
+
+ol {
+    list-style-type: decimal;
+    margin-left: 1.5em;
+}
+
+pre {
+    white-space: pre;
+}
+
+blockquote {
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
+noscript {
+    display: none;
+}  
+"""
 class PdfMaker():
+
     def createInMemoryPdf(self, pdfData):
         pdfBuffer = cStringIO.StringIO()
         
@@ -16,11 +225,24 @@ class PdfMaker():
 
         return pdfBuffer.getvalue()
     
-    def createFromHtml(self, url, color=0, style=None, landscape=0, number=0):
+    def createFromHtml(self, url, outputSize = 'b6', color=0, style=None, landscape=0, number=0):
+        cssInsert = DEFAULT_CSS + """
+            @page {
+                @frame {
+                    size: %s
+                }
+                size: %s;
+            } 
+        """ % (outputSize, outputSize)
+        logging.info("cssInsert: " + cssInsert)
         pdfBuffer = cStringIO.StringIO()
+        page = urllib.urlopen(url)
+        logging.info(page)
         pdf = pisa.CreatePDF(
-            urllib.urlopen(url),
+            page,
             pdfBuffer,
+            format = outputSize,
+            default_css = cssInsert,
             log_warn = 1,
             log_err = 1,
             path = url,
