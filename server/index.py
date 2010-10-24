@@ -7,10 +7,12 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from ExtensionPostHandler import ExtensionPostHandler
 from SiteHandler import SiteHandler
+from OAuthHandler import OAuthHandler
 
-application = webapp.WSGIApplication(
-                        [('/convert', ExtensionPostHandler),
-                         ('/', SiteHandler)],
+application = webapp.WSGIApplication([
+                        ('/convert', ExtensionPostHandler),
+                        ('/auth', OAuthHandler),
+                        ('/', SiteHandler)],
                         debug=True)
 
 def main():

@@ -1,11 +1,11 @@
 from google.appengine.ext import webapp
-from google.appengine.ext.webapp.util import run_wsgi_app
 from django.utils import simplejson
 import logging, pdb, traceback
 from PdfMaker import PdfMaker
 from MailInterface import MailInterface
 from HtmlParser import HtmlParser
 from django.utils import simplejson
+from model.Hits import SiteStats
 
 class ExtensionPostHandler(webapp.RequestHandler):
 
@@ -33,6 +33,12 @@ class ExtensionPostHandler(webapp.RequestHandler):
             logging.info('JSON Result: ' + simplejson.dumps(jsonResult));
             self.response.out.write(simplejson.dumps(jsonResult));
 
+            new = SiteStats(
+                source = self.request.remote_addr,
+                action = 'ExtensionPostHandler/post',
+                headers = self.request.headers
+            )
+                        
         except Exception, ex:
             logging.error('Error generating pdf: ' + str(ex.message))
             logging.error(traceback.format_exc())
