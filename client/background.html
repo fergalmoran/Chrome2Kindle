@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script type="text/javascript" src="chrome_ex_oauthsimple.js"></script>
+        <script type="text/javascript" src="chrome_ex_oauth.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript"></script>
-        <script src="background.js" type="text/javascript"></script> 
         <script>
+
+            var oauth = ChromeExOAuth.initBackgroundPage({
+                  'request_url'     : 'https://www.google.com/accounts/OAuthGetRequestToken',
+                  'authorize_url'   : 'https://www.google.com/accounts/OAuthAuthorizeToken',
+                  'access_url'      : 'https://www.google.com/accounts/OAuthGetAccessToken',
+                  'consumer_key'    : 'anonymous',
+                  'consumer_secret' : 'anonymous',
+                  'scope'           : 'https://docs.google.com/feeds/',
+                  'app_name'        : 'Chrome 2 Kindle'
+            });
+            
             function addBookmark(title, url, parentId){
                 chrome.bookmarks.create({
                     'parentId'  :   parentId,
@@ -11,11 +23,18 @@
                     'url'       :   url
                 });
             }
+            function authorise(){
+                oauth.authorize(function(){
+                    alert('You is authorized lol 1');
+                });
+            }
             chrome.extension.onRequest.addListener(
                 function(request, sender, sendResponse){
-                    if (request.message = 'create_bookmark'){
+                    if (request.message == 'create_bookmark'){
                         addBookmark(request.title, request.url, request.parentId);
                         sendResponse('Bookmark created');
+                    }else if(request.message == 'authorise'){
+                        authorise();
                     }
                 }
             );
