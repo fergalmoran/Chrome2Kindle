@@ -1,6 +1,6 @@
 {
     "name"              :   "Chrome 2 Kindle",
-    "version"           :   "0.4",
+    "version"           :   "0.5",
     "description"       :   "Sends rendered web pages to your kindle device",
     "options_page"      :   "options.html",
     "background_page"   :   "background.html",
