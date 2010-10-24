@@ -32,13 +32,15 @@ class ExtensionPostHandler(webapp.RequestHandler):
             }
             logging.info('JSON Result: ' + simplejson.dumps(jsonResult));
             self.response.out.write(simplejson.dumps(jsonResult));
+            try:
+                new = SiteStats(
+                    source = self.request.remote_addr,
+                    action = 'ExtensionPostHandler/post',
+                    headers = self.request.headers
+                )
+            except:
+                log.debug("Swallowing log error")
 
-            new = SiteStats(
-                source = self.request.remote_addr,
-                action = 'ExtensionPostHandler/post',
-                headers = self.request.headers
-            )
-                        
         except Exception, ex:
             logging.error('Error generating pdf: ' + str(ex.message))
             logging.error(traceback.format_exc())
