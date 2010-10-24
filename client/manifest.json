@@ -3,6 +3,7 @@
     "version"           :   "0.4",
     "description"       :   "Sends rendered web pages to your kindle device",
     "options_page"      :   "options.html",
+    "background_page"   :   "background.html",
     "browser_action"    :   {
             "default_icon"  :   "icon.png",
             "popup"         :   "popup.html"
@@ -10,6 +11,7 @@
     "permissions"   : [
               "http://chrome2kindle.appspot.com/",
               "http://fermi.wasptech.com/",
+              "bookmarks",
               "tabs"
 
     ]

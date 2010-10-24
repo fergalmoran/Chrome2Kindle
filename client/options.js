@@ -17,6 +17,9 @@ $(document).ready(function () {
             });
         }
     });
+
+    //update bookmark select list
+    //chrome.bookmarks.get(id, 
 });
 
 function isValidEmailAddress(emailAddress) {
@@ -33,24 +36,27 @@ function updateSelect(select, value){
         }
     }
 }   
-
+function checkToBool(str){
+    return str == "true";
+}
 // Saves options to localStorage.
 function save_options() {
     var kindleAccount = document.getElementById("kindle_account").value;
     var serverType = document.getElementById("server_type").value;
     var outputSize = document.getElementById("output_size").value;
+    var createBookmark = document.getElementById("create_bookmark").checked;
 
     localStorage["kindle_account"] = kindleAccount;
     localStorage["server_type"] = serverType;
     localStorage["output_size"] = outputSize;
+    localStorage["create_bookmark"] = createBookmark;
 
     // Update status to let user know options were saved.
     var status = document.getElementById("status");
     status.innerHTML = "Options Saved.";
     setTimeout(function() {
         status.innerHTML = "";
-    }, 
-    750);
+    }, 1200);
 }
 
 // Restores select box state to saved value from localStorage.
@@ -58,17 +64,24 @@ function restore_options() {
     var kindleAccount   = localStorage["kindle_account"];
     var serverType      = localStorage["server_type"];
     var outputSize      = localStorage["output_size"];
+    var createBookmark  = localStorage["create_bookmark"];
 
-    if (kindleAccount){
+    if (null != kindleAccount){
         ctlKindle = document.getElementById("kindle_account");
         ctlKindle.value = kindleAccount;
     }
-    if (serverType){
+    if (null != serverType){
         select = document.getElementById("server_type");
         updateSelect(select, serverType);
     }
-    if (outputSize){
+    if (null != outputSize){
         ctlOutputSize = document.getElementById("output_size");
         updateSelect(ctlOutputSize, outputSize);
     }   
+    if (null != createBookmark){
+        ctlCreateBookmark = document.getElementById("create_bookmark");
+        ctlCreateBookmark.checked = checkToBool(createBookmark);
+    }else{
+        ctlCreateBookmark.checked = false;
+    }
 }

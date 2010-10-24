@@ -51,6 +51,18 @@ var podnoms = {
                 if (response.readyState == 4 && response.status == 200){
                     $('#main>h1').text('Success');
                     $('#content').html( '<span>' + resp['responseText'] + '</span>' );
+                    if (localStorage["create_bookmark"] == "true"){
+                        chrome.extension.sendRequest(
+                        {
+                            message     :   'create_bookmark',
+                            parentId    :   '1',
+                            title       :   'NewB',
+                            url         :   'http://www.google.com'
+                        },  
+                        function (result){
+                                alert(result);
+                        });
+                    }
                 }else{
                     alert("Boo urns");
                 }
@@ -59,6 +71,7 @@ var podnoms = {
                 $('#main>h1').text('Error creating ebook...');
                 $('#content').html(
                     '<span>Status: ' + xml.status + '</span><br />' + 
+                    '<span>Failed to create ebook. The HTML on this page is probably broken' + '</span><br />' + 
                     '<span>' + xml.statusText + '</span>' );
             }
         }
